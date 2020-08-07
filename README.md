@@ -1,5 +1,5 @@
 # lidou
-基于spring boot和netty的自制rpc框架（客户端端）
+基于spring boot和netty的自制rpc框架（客户端）
 
 # 使用方法
 
