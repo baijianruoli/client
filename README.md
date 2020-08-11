@@ -13,7 +13,7 @@ lidou的客户端
 
 3.服务端和客户端的Service全路径一定要一样
 
-4. 像@Autowried一样使用@Renference，自动注入代理对象（前提现在只能注入标记了@Controller或者@RestController类的属性）
+4.像@Autowried一样使用@Renference，自动注入代理对象（现在只能注入标记了@Controller或者@RestController类的属性）
 
 # 实现需求
 1. jdk动态代理，获得调用方法的类全路径，方法参数，类型，和名称
@@ -30,4 +30,4 @@ lidou的客户端
 
 # 压测
 2w的压力测试下，tcp响应时间为一百多毫秒，多线程可以继续改进
->>>>>>> e7d4a3a3214942912f9320ae14ff5bd9c310acbe
+
