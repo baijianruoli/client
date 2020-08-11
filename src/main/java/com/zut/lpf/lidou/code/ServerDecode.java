@@ -15,7 +15,11 @@ public class ServerDecode extends ByteToMessageDecoder {
         byte[] bytes = new byte[byteBuf.readableBytes()];
         byteBuf.readBytes(bytes);
         BaseResponse deserialize = (BaseResponse) ProtostuffUtils.deserialize(bytes, BaseResponse.class);
+<<<<<<< HEAD
 
+=======
+        System.out.println("服务端回复的信息:" + deserialize);
+>>>>>>> e7d4a3a3214942912f9320ae14ff5bd9c310acbe
         list.add(deserialize);
     }
 }

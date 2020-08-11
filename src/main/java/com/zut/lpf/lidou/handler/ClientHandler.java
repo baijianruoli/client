@@ -13,10 +13,16 @@ import java.util.concurrent.Callable;
 
 @Slf4j
 @Data
+<<<<<<< HEAD
 public class ClientHandler extends ChannelInboundHandlerAdapter implements Callable {
     private ChannelHandlerContext context;
 
     private  Object result;
+=======
+public class ClientHandler  extends ChannelInboundHandlerAdapter implements Callable {
+    private ChannelHandlerContext context;
+    private BaseResponse result;
+>>>>>>> e7d4a3a3214942912f9320ae14ff5bd9c310acbe
     private BaseRequest pars;
 
     @Override
@@ -36,7 +42,11 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements Calla
     }
     @Override
     public synchronized void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+<<<<<<< HEAD
         this.result =((BaseResponse) msg).getData();
+=======
+        this.result = (BaseResponse)msg;
+>>>>>>> e7d4a3a3214942912f9320ae14ff5bd9c310acbe
         this.notify();
     }
     @Override

@@ -45,7 +45,10 @@ public class InitRpcConfig  implements CommandLineRunner {
     public Object getBean(final Class<?> serviceClass, final Object o) {
         return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[]{serviceClass}, (proxy, method, args) -> {
             BaseRequest baseRequest = new BaseRequest((String)o, method.getName(), args, method.getParameterTypes());
+<<<<<<< HEAD
            
+=======
+>>>>>>> e7d4a3a3214942912f9320ae14ff5bd9c310acbe
             clientHandler.setPars(baseRequest);
             System.out.println(clientHandler.getPars());
             return executor.submit(clientHandler).get();

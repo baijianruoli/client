@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -11,6 +12,8 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 =======
+=======
+>>>>>>> e7d4a3a3214942912f9320ae14ff5bd9c310acbe
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -44,4 +47,7 @@ build/
 
 ### VS Code ###
 .vscode/
+<<<<<<< HEAD
 >>>>>>> 新增注解
+=======
+>>>>>>> e7d4a3a3214942912f9320ae14ff5bd9c310acbe
