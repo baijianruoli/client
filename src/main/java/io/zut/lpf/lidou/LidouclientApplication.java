@@ -1,4 +1,4 @@
-package com.zut.lpf.lidou;
+package io.zut.lpf.lidou;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

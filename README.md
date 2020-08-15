@@ -1,7 +1,7 @@
-<<<<<<< HEAD
+
 # client
 lidou的客户端
-=======
+
 # lidou
 基于spring boot和netty的自制rpc框架（客户端）
 

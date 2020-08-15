@@ -1,4 +1,4 @@
-package com.zut.lpf.lidou.config;
+package io.zut.lpf.lidou.config;
 
 import java.lang.annotation.*;
 

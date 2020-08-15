@@ -1,7 +1,7 @@
-package com.zut.lpf.lidou.handler;
+package io.zut.lpf.lidou.handler;
 
-import com.zut.lpf.lidou.util.BaseRequest;
-import com.zut.lpf.lidou.util.BaseResponse;
+import io.zut.lpf.lidou.util.BaseRequest;
+import io.zut.lpf.lidou.util.BaseResponse;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleState;
@@ -13,16 +13,12 @@ import java.util.concurrent.Callable;
 
 @Slf4j
 @Data
-<<<<<<< HEAD
-public class ClientHandler extends ChannelInboundHandlerAdapter implements Callable {
-    private ChannelHandlerContext context;
 
-    private  Object result;
-=======
+
 public class ClientHandler  extends ChannelInboundHandlerAdapter implements Callable {
     private ChannelHandlerContext context;
-    private BaseResponse result;
->>>>>>> e7d4a3a3214942912f9320ae14ff5bd9c310acbe
+    private Object result;
+
     private BaseRequest pars;
 
     @Override
@@ -42,11 +38,11 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter implements Call
     }
     @Override
     public synchronized void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-<<<<<<< HEAD
+
         this.result =((BaseResponse) msg).getData();
-=======
+
         this.result = (BaseResponse)msg;
->>>>>>> e7d4a3a3214942912f9320ae14ff5bd9c310acbe
+
         this.notify();
     }
     @Override

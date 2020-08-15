@@ -1,7 +1,7 @@
-package com.zut.lpf.lidou.service;
+package io.zut.lpf.lidou.service;
 
 
-import com.zut.lpf.lidou.util.BaseResponse;
+import io.zut.lpf.lidou.util.BaseResponse;
 
 public interface MessageService {
     public BaseResponse send(String msg);

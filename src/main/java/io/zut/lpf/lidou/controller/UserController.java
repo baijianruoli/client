@@ -1,8 +1,8 @@
-package com.zut.lpf.lidou.controller;
+package io.zut.lpf.lidou.controller;
 
-import com.zut.lpf.lidou.config.Reference;
-import com.zut.lpf.lidou.service.UserService;
-import com.zut.lpf.lidou.util.BaseResponse;
+import io.zut.lpf.lidou.config.Reference;
+import io.zut.lpf.lidou.service.UserService;
+import io.zut.lpf.lidou.util.BaseResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

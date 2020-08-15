@@ -1,4 +1,4 @@
-package com.zut.lpf.lidou.util;/**
+package io.zut.lpf.lidou.util;/**
  * Created by Administrator on 2019/7/29.
  */
 
