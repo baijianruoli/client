@@ -1,9 +1,9 @@
-package io.zut.lpf.lidou.config;
+package io.github.baijianruoli.lidou.config;
 
-import io.zut.lpf.lidou.util.BaseRequest;
-import io.zut.lpf.lidou.code.ServerDecode;
-import io.zut.lpf.lidou.code.ServerEncode;
-import io.zut.lpf.lidou.handler.ClientHandler;
+import io.github.baijianruoli.lidou.util.BaseRequest;
+import io.github.baijianruoli.lidou.code.ServerDecode;
+import io.github.baijianruoli.lidou.code.ServerEncode;
+import io.github.baijianruoli.lidou.handler.ClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -46,7 +46,7 @@ public class InitRpcConfig  implements CommandLineRunner {
         return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[]{serviceClass}, (proxy, method, args) -> {
             BaseRequest baseRequest = new BaseRequest((String)o, method.getName(), args, method.getParameterTypes());
             clientHandler.setPars(baseRequest);
-            System.out.println(clientHandler.getPars());
+            /*System.out.println(clientHandler.getPars());*/
             return executor.submit(clientHandler).get();
         });
     }

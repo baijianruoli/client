@@ -1,4 +1,4 @@
-package io.zut.lpf.lidou.config;
+package io.github.baijianruoli.lidou.config;
 
 import java.lang.annotation.*;
 

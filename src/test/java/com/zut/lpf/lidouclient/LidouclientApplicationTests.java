@@ -1,4 +1,4 @@
-package io.zut.lpf.lidouclient;
+package com.zut.lpf.lidouclient;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

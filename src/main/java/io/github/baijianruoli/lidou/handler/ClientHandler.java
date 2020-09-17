@@ -1,7 +1,7 @@
-package io.zut.lpf.lidou.handler;
+package io.github.baijianruoli.lidou.handler;
 
-import io.zut.lpf.lidou.util.BaseRequest;
-import io.zut.lpf.lidou.util.BaseResponse;
+import io.github.baijianruoli.lidou.util.BaseRequest;
+import io.github.baijianruoli.lidou.util.BaseResponse;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleState;
@@ -13,8 +13,6 @@ import java.util.concurrent.Callable;
 
 @Slf4j
 @Data
-
-
 public class ClientHandler  extends ChannelInboundHandlerAdapter implements Callable {
     private ChannelHandlerContext context;
     private Object result;
