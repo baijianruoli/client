@@ -4,9 +4,13 @@ import lombok.Data;
 
 @Data
 public class BaseRequest {
+    //类名
     private String className;
+    //方法名
     private String methodName;
+    //参数
     private Object[] parameters;
+    //参数类型
     private Class<?>[] parameTypes;
 
     public BaseRequest(String className) {

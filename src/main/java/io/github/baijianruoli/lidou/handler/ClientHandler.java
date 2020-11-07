@@ -14,7 +14,9 @@ import java.util.concurrent.Callable;
 @Slf4j
 @Data
 public class ClientHandler  extends ChannelInboundHandlerAdapter implements Callable {
+
     private ChannelHandlerContext context;
+
     private Object result;
 
     private BaseRequest pars;
@@ -31,16 +33,14 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter implements Call
     }
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        ctx.close();
+        ctx.channel().close();
         log.error("{}异常", cause.getMessage());
     }
     @Override
     public synchronized void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
         this.result =((BaseResponse) msg).getData();
-
         this.result = (BaseResponse)msg;
-
         this.notify();
     }
     @Override
@@ -49,7 +49,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter implements Call
     }
 
     public synchronized Object call() throws Exception {
-        this.context.writeAndFlush(this.pars);
+        this.context.channel().writeAndFlush(this.pars);
         this.wait();
         return this.result;
     }
