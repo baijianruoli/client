@@ -7,9 +7,7 @@ public class MyZkSerializer implements ZkSerializer {
 
     @Override
     public byte[] serialize(Object o) throws ZkMarshallingError {
-
         return  JSON.toJSONBytes(o);
-
     }
 
     @Override

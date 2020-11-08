@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-io.github.baijianruoli.lidou.config.InitRpcConfig,io.github.baijianruoli.lidou.config.ZkClientConfig
+io.github.baijianruoli.lidou.config.InitRpcConfig,io.github.baijianruoli.lidou.config.ZkClientConfig,io.github.baijianruoli.lidou.service.impl.LoadBalanceServiceImpl

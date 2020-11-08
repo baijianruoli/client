@@ -6,5 +6,5 @@ import java.lang.annotation.*;
 @Documented
 @Target({ElementType.FIELD})
 public @interface Reference {
-    String value() default "LIQIQI";
+    String loadBalance() default "random";
 }

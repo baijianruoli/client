@@ -1,10 +1,13 @@
 package io.github.baijianruoli.lidou.config;
 
+import io.github.baijianruoli.lidou.service.LoadBalanceService;
 import io.github.baijianruoli.lidou.util.BaseRequest;
 import io.github.baijianruoli.lidou.code.ServerDecode;
 import io.github.baijianruoli.lidou.code.ServerEncode;
 import io.github.baijianruoli.lidou.handler.ClientHandler;
+import io.github.baijianruoli.lidou.util.GlobalReferenceMap;
 import io.github.baijianruoli.lidou.util.PathUtils;
+import io.github.baijianruoli.lidou.util.StaticCode;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -20,6 +23,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Proxy;
 import java.util.List;
@@ -33,36 +37,35 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class InitRpcConfig  implements CommandLineRunner {
 
-    private static ExecutorService executor = Executors.newFixedThreadPool(1);
-    private static ClientHandler clientHandler;
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
     @Autowired
     private ApplicationContext applicationContext;
-    @Value("${lidou.port}")
-    private Integer port;
-    @Value("${lidou.url}")
-    private String url;
     @Autowired
     private InitRpcConfig initRpcConfig;
     @Autowired
     private ZkClient zkClient;
-
+    @Autowired
+    private LoadBalanceService loadBalanceService;
 
     public InitRpcConfig() {
     }
 
-    public Object getBean(final Class<?> serviceClass, final Object o) {
+    public Object getBean(final Class<?> serviceClass, final Object o,String mode) {
         return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[]{serviceClass}, (proxy, method, args) -> {
             BaseRequest baseRequest = new BaseRequest((String)o, method.getName(), args, method.getParameterTypes());
            //负载均衡
             //获得zookeeper路径
+            String url;
+            String port;
             String path= PathUtils.addZkPath(serviceClass.getName());
             List<String> children = zkClient.getChildren(path);
-            //随机算法
-            path+="/"+children.get(new Random().nextInt(children.size()));
-            String temp = (String)zkClient.readData(path);
-            String[] split = temp.split(":");
+            //负载均衡
+            String tmp = loadBalanceService.loadBalance(path, children, mode);
+            String[] split = tmp.split(":");
+            url=split[0];
+            port=split[1];
             NioEventLoopGroup bossGroup = new NioEventLoopGroup(1);
-            clientHandler = new ClientHandler();
+          ClientHandler  clientHandler = new ClientHandler();
             Bootstrap bootstrap = new Bootstrap();
             bootstrap.group(bossGroup).channel(NioSocketChannel.class).option(ChannelOption.TCP_NODELAY, true).handler(new ChannelInitializer<SocketChannel>() {
                 protected void initChannel(SocketChannel socketChannel) throws Exception {
@@ -71,22 +74,14 @@ public class InitRpcConfig  implements CommandLineRunner {
                     pipeline.addLast(new ServerDecode());
                     pipeline.addLast(new IdleStateHandler(80L, 80L, 80L, TimeUnit.SECONDS));
                     pipeline.addLast(clientHandler);
-
                 }
             });
-            System.out.println(split[0]+"   "+split[1]);
-            ChannelFuture future1 = bootstrap.connect(split[0], Integer.valueOf(split[1])).sync();
-            future1.addListener(new ChannelFutureListener() {
-                @Override
-                public void operationComplete(ChannelFuture channelFuture) throws Exception {
-                    if(channelFuture.isSuccess())
-                        System.out.println("ok");
-                    else
-                        System.out.println("fail");
-                }
-            });
+            ChannelFuture future1 = bootstrap.connect(url, Integer.valueOf(port)).sync();
             clientHandler.setPars(baseRequest);
-            return executor.submit(clientHandler).get();
+            Object result = executor.submit(clientHandler).get();
+            future1.channel().closeFuture();
+            bossGroup.shutdownGracefully();
+            return result;
         });
     }
 
@@ -100,9 +95,10 @@ public class InitRpcConfig  implements CommandLineRunner {
               f.setAccessible(true);
               if (f.isAnnotationPresent(Reference.class)) {
                   Class<?> type = f.getType();
+                  Reference annotation = f.getAnnotation(Reference.class);
                   //获得代理对象
-                  Object bean1 = this.initRpcConfig.getBean(type, type.getName());
-                  //设置属性值
+                  Object bean1 = this.initRpcConfig.getBean(type, type.getName(),annotation.loadBalance());
+                  //注入代理对象
                   f.set(bean, bean1);
               }
           }
@@ -111,6 +107,5 @@ public class InitRpcConfig  implements CommandLineRunner {
 
     public void run(String... args) throws Exception {
        init();
-
     }
 }
