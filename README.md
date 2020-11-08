@@ -10,6 +10,9 @@ lidou的客户端
 1.服务端和客户端的Service全路径一定要一样
 
 2.像@Autowried一样使用@Renference，自动注入代理对象（现在只能注入标记了@Controller或者@RestController类的属性）
+  填加负载均衡算法策略。
+  loadBalance="random" 随机(默认策略)
+  loadBalance="roundrobin" 轮询
 
 3.在配置文件加上lidou.zookeeper.url，为zookeeper的注册地址
 
@@ -21,7 +24,7 @@ lidou的客户端
 5. 反射
 6. 心跳检测
 7. 自定义注解（现在客户端只要在Service上加上@Reference，自动注入代理对象，像调用本地方法一样调用远程方法）
-8. 加入zookeeper注册中心，提供简单的负载均衡
+8. 加入zookeeper注册中心，提供简单的负载均衡(1.随机算法 2.轮询算法)
 
 # 缺少的功能
 1. 加入maven中央仓库，方便使用
