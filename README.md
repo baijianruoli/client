@@ -10,8 +10,11 @@ lidou的客户端
 1.服务端和客户端的Service全路径一定要一样
 
 2.像@Autowried一样使用@Renference，自动注入代理对象（现在只能注入标记了@Controller或者@RestController类的属性）
-  填加负载均衡算法策略。
+
+  可填加负载均衡算法策略。
+  
   loadBalance="random" 随机(默认策略)
+  
   loadBalance="roundrobin" 轮询
 
 3.在配置文件加上lidou.zookeeper.url，为zookeeper的注册地址
